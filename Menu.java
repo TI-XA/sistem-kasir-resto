@@ -9,7 +9,7 @@ public class Menu {
     FoodBeverageService foodService = new FoodBeverageService();
 
     public void getMenu() {
-        System.out.println("[=] SISTEM KASIR RESTO [=]");
+        System.out.println("[=] SISTEM! KASIR RESTO [=]");
         System.out.println("");
         System.out.println("[1] Add Food & Beverage");
         System.out.println("[2] List Food & Beverage");
