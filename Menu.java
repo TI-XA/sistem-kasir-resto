@@ -105,6 +105,10 @@ public class Menu {
             this.addCartMenu();
         }
 
+        //todo: pengurangan stok
+
+
+
         cartFoodBeverage.setPrice(foodBeverage.getPrice().multiply(new BigDecimal(cartFoodBeverage.getQty())));
         cartService.addCart(cartFoodBeverage);
 
