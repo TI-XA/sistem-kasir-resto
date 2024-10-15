@@ -32,10 +32,15 @@ public class Menu {
             case 2:
                 this.listFoodMenu();
                 break;
-                case 3:
+            case 3:
                 this.addCartMenu();
                 break;
-
+            case 4:
+                checkout.checkout(); 
+                break;
+            default:
+                System.out.println("Pilihan tidak valid. Coba lagi.");
+                this.getMenu();
         }
     }
 
