@@ -48,7 +48,7 @@ public class Menu {
         FoodBeverage food = new FoodBeverage();
 
         System.out.print("Masukan nama  : ");
-        food.setName(scanner.next());
+        food.setName(scanner.next()+scanner.nextLine());
 
         System.out.print("Apakah ini minuman (Y/N) ? ");
         food.setIsdrink(scanner.next().equalsIgnoreCase("Y")); 
