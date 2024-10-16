@@ -1,16 +1,14 @@
-import domain.FoodBeverage;
-import domain.FoodBeverage;
-import service.CartService;
-import service.FoodBeverageService;
-
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
     Scanner scanner = new Scanner(System.in);
     FoodBeverageService foodService = new FoodBeverageService();
     CartService cartService = new CartService();
+    Checkout checkout = new Checkout(scanner, cartService); 
+    Payment payment = new Payment();
 
     public void getMenu() {
         System.out.println("[=] SISTEM KASIR RESTO V2 [=]");
@@ -32,22 +30,28 @@ public class Menu {
             case 2:
                 this.listFoodMenu();
                 break;
-                case 3:
+            case 3:
                 this.addCartMenu();
                 break;
-
+            case 4:
+                this.paymentMenu();
+                //checkout.checkout(); 
+                break;
+            default:
+                System.out.println("Pilihan tidak valid. Coba lagi."); 
+                this.getMenu();
         }
     }
 
-    public void addFoodMenu(){
+    public void addFoodMenu() {
         System.out.println("[=] ADD FOOD [=]");
         FoodBeverage food = new FoodBeverage();
 
         System.out.print("Masukan nama  : ");
-        food.setName(scanner.next());
+        food.setName(scanner.next()+scanner.nextLine());
 
         System.out.print("Apakah ini minuman (Y/N) ? ");
-        food.setIsdrink(scanner.next().equals("Y") ? true : false);
+        food.setIsdrink(scanner.next().equalsIgnoreCase("Y")); 
 
         System.out.print("Jumlah Stok : ");
         food.setQty(scanner.nextInt());
@@ -59,14 +63,13 @@ public class Menu {
         this.getMenu();
     }
 
-    public void listFoodMenu(){
+    public void listFoodMenu() {
         System.out.println("[=] LIST FOOD [=]");
-        for (FoodBeverage food : foodService.listFood()){
+        for (FoodBeverage food : foodService.listFood()) {
             System.out.println("NAMA = " + food.getName());
             System.out.println("JUMLAH = " + food.getQty());
             System.out.println("HARGA = " + food.getPrice());
             System.out.println("JENIS = " + (food.getIsdrink() ? "MINUMAN" : "MAKANAN"));
-
             System.out.println("==");
         }
 
@@ -74,45 +77,70 @@ public class Menu {
             System.out.println("Press any key to continue...");
             System.in.read();
         } catch (IOException e) {
-
+            e.printStackTrace();  
         }
 
         this.getMenu();
     }
 
-    public void addCartMenu(){
+    public void addCartMenu() {
+
         Integer index = 0;
-        for (FoodBeverage food : foodService.listFood()){
-            System.out.println("NO."+ ++index);
+        for (FoodBeverage food : foodService.listFood()) {
+            System.out.println("NO." + ++index);
             System.out.println("NAMA = " + food.getName());
             System.out.println("JUMLAH = " + food.getQty());
             System.out.println("HARGA = " + food.getPrice());
             System.out.println("JENIS = " + (food.getIsdrink() ? "MINUMAN" : "MAKANAN"));
-
             System.out.println("==");
         }
 
+
         System.out.print("Pilih makanan/minuman = ");
-        FoodBeverage foodBeverage = FoodBeverageService.foodList.get((scanner.nextInt() - 1 ));
+        int pilihan = scanner.nextInt();		
+        if (pilihan < 1 || pilihan > foodService.listFood().size()) {
+            System.out.println("Pilihan tidak valid.");  
+            return;  
+        }
+        
+        FoodBeverage foodBeverage = foodService.listFood().get(pilihan - 1);
         FoodBeverage cartFoodBeverage = new FoodBeverage();
         cartFoodBeverage.setName(foodBeverage.getName());
-        cartFoodBeverage.setIsdrink(foodBeverage.getIsdrink());
-        System.out.print("Jumlah di order = ");
-        cartFoodBeverage.setQty(scanner.nextInt());
+        cartFoodBeverage.setIsdrink(foodBeverage.getIsdrink()); 
 
-        if(cartFoodBeverage.getQty() > foodBeverage.getQty()){
+   
+        System.out.print("Jumlah di order = ");
+        int jumlahPesan = scanner.nextInt();
+
+     
+        if (jumlahPesan > foodBeverage.getQty()) {
             System.out.println("Permintaan melebihi stok!");
-            this.addCartMenu();
+            return; 
         }
 
+<<<<<<< HEAD
         //todo: pengurangan stok
 
 
 
         cartFoodBeverage.setPrice(foodBeverage.getPrice().multiply(new BigDecimal(cartFoodBeverage.getQty())));
+=======
+
+        int newStock = foodBeverage.getQty() - jumlahPesan;
+        foodBeverage.setQty(newStock);
+
+     
+        BigDecimal totalHarga = foodBeverage.getPrice().multiply(BigDecimal.valueOf(jumlahPesan));
+        cartFoodBeverage.setQty(jumlahPesan);
+        cartFoodBeverage.setPrice(totalHarga);
+
+
+>>>>>>> ef282798fb91581a2c0628b1ee63c8d1a1d28d8e
         cartService.addCart(cartFoodBeverage);
 
-        for (FoodBeverage food : CartService.carts){
+
+        System.out.println("[=] KERANJANG BELANJA [=]");
+        for (FoodBeverage food : CartService.carts) {
             System.out.println("NAMA = " + food.getName());
             System.out.println("JUMLAH = " + food.getQty());
             System.out.println("HARGA = " + food.getPrice());
@@ -120,5 +148,46 @@ public class Menu {
             System.out.println("==");
         }
 
+
+        try {
+            System.out.println("Tekan enter untuk kembali ke menu utama...");
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        this.getMenu();
+    }
+
+    public void paymentMenu(){
+        System.out.println("[=] PAYMENT [=]");
+        List<FoodBeverage> carts = cartService.getCarts();
+        
+        BigDecimal totalHarga = BigDecimal.ZERO;
+        for (FoodBeverage food : carts) {
+            totalHarga = totalHarga.add(food.getPrice());
+        }
+
+
+        System.out.println("Total harga belanjaan: " + totalHarga);
+
+        System.out.print("Masukkan uang pembayaran: ");
+        payment.setPembayaran(scanner.nextBigDecimal());;
+
+        if (payment.getPembayaran().compareTo(totalHarga) < 0) {
+            System.out.println("Uang pembayaran tidak cukup!");
+            this.paymentMenu();
+        } else {
+            payment.setKembalian(payment.getPembayaran().subtract(totalHarga));
+            System.out.println("Uang kembalian: " + payment.getKembalian());
+        }
+
+        System.out.println("Tekan enter untuk selesai...");
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

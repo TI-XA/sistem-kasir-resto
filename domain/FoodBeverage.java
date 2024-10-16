@@ -1,34 +1,36 @@
-package domain;
+ 
 
 import java.math.BigDecimal;
 
+
 public class FoodBeverage {
     private String name;
-    private Integer qty;
+    private boolean isdrink;
+    private int qty;
     private BigDecimal price;
-    private Boolean isdrink;
 
-    public Boolean getIsdrink() {
-        return isdrink;
-    }
 
-    public void setIsdrink(Boolean isdrink) {
-        this.isdrink = isdrink;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public boolean getIsdrink() {
+        return isdrink;
     }
 
-    public Integer getQty() {
+    public void setIsdrink(boolean isdrink) {
+        this.isdrink = isdrink;
+    }
+
+    public int getQty() {
         return qty;
     }
 
-    public void setQty(Integer qty) {
+    public void setQty(int qty) {
         this.qty = qty;
     }
 
