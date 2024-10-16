@@ -12,7 +12,6 @@ public class Menu {
     Scanner scanner = new Scanner(System.in);
     FoodBeverageService foodService = new FoodBeverageService();
     CartService cartService = new CartService();
-    Checkout checkout = new Checkout(scanner,cartService);
     Payment payment = new Payment();
 
     public void getMenu() {
@@ -123,9 +122,6 @@ public class Menu {
             return; 
         }
 
-        //todo: pengurangan stok
-
-
 
         cartFoodBeverage.setPrice(foodBeverage.getPrice().multiply(new BigDecimal(cartFoodBeverage.getQty())));
 
@@ -154,7 +150,7 @@ public class Menu {
 
 
         try {
-            System.out.println("Tekan enter untuk kembali ke menu utama...");
+            System.out.println("Press any key to continue...");
             System.in.read();
         } catch (IOException e) {
             e.printStackTrace();
@@ -187,11 +183,14 @@ public class Menu {
             System.out.println("Uang kembalian: " + payment.getKembalian());
         }
 
-        System.out.println("Tekan enter untuk selesai...");
+        System.out.println("Press enter to complete the payment...");
         try {
             System.in.read();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+        this.getMenu();
     }
 }
