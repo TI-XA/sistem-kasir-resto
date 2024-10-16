@@ -167,8 +167,9 @@ public class Menu {
         BigDecimal totalHarga = BigDecimal.ZERO;
         for (FoodBeverage food : carts) {
             totalHarga = totalHarga.add(food.getPrice());
+            System.out.println("NAMA = " + food.getName());
+            System.out.println("JUMLAH = " + food.getQty());
         }
-
 
         System.out.println("Total harga belanjaan: " + totalHarga);
 
