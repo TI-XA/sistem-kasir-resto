@@ -79,7 +79,7 @@ public class Menu {
             System.out.println("Press any key to continue...");
             System.in.read();
         } catch (IOException e) {
-
+            e.printStackTrace();  
         }
 
         this.getMenu();
