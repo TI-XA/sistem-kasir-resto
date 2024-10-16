@@ -1,16 +1,18 @@
-package service;
-
-import domain.FoodBeverage;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class CartService {
-    public static List<FoodBeverage> carts = new ArrayList<FoodBeverage>();
+    public static List<FoodBeverage> carts = new ArrayList<>();
 
-    public List<FoodBeverage> addCart(FoodBeverage foodBeverage){
+    public void addCart(FoodBeverage foodBeverage) { 
         carts.add(foodBeverage);
+    }
 
+    public List<FoodBeverage> getCarts() {
         return carts;
+    }
+
+    public void clearCarts() {
+        carts.clear();
     }
 }
