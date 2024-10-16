@@ -1,3 +1,6 @@
+import domain.FoodBeverage;
+import service.CartService;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
@@ -7,10 +10,11 @@ public class Checkout {
     private Scanner scanner;
     private CartService cartService;
 
-    public Checkout(Scanner scanner, CartService cartService) {
+    public Checkout(Scanner scanner , CartService cartService) {
         this.scanner = scanner;
         this.cartService = cartService;
     }
+
 
     public void checkout() {
         List<FoodBeverage> carts = cartService.getCarts();

@@ -1,3 +1,8 @@
+import domain.FoodBeverage;
+import service.CartService;
+import service.FoodBeverageService;
+import service.Payment;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
@@ -7,7 +12,7 @@ public class Menu {
     Scanner scanner = new Scanner(System.in);
     FoodBeverageService foodService = new FoodBeverageService();
     CartService cartService = new CartService();
-    Checkout checkout = new Checkout(scanner, cartService); 
+    Checkout checkout = new Checkout(scanner,cartService);
     Payment payment = new Payment();
 
     public void getMenu() {
@@ -118,13 +123,12 @@ public class Menu {
             return; 
         }
 
-<<<<<<< HEAD
         //todo: pengurangan stok
 
 
 
         cartFoodBeverage.setPrice(foodBeverage.getPrice().multiply(new BigDecimal(cartFoodBeverage.getQty())));
-=======
+
 
         int newStock = foodBeverage.getQty() - jumlahPesan;
         foodBeverage.setQty(newStock);
@@ -135,7 +139,7 @@ public class Menu {
         cartFoodBeverage.setPrice(totalHarga);
 
 
->>>>>>> ef282798fb91581a2c0628b1ee63c8d1a1d28d8e
+
         cartService.addCart(cartFoodBeverage);
 
 
