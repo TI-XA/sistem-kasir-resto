@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Scanner;
 
-public class Menu {
+public  class Menu {
     Scanner scanner = new Scanner(System.in);
     FoodBeverageService foodService = new FoodBeverageService();
     CartService cartService = new CartService();

@@ -2,6 +2,9 @@ package service;
 
 import java.math.BigDecimal;
 
+/**
+ * KELAS
+ */
 public class Payment {
     private BigDecimal uangPembayaran;
     private BigDecimal uangKembalian;

@@ -5,7 +5,10 @@ import domain.FoodBeverage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CartService {
+/**
+ * INHERITANCE!
+ */
+public class CartService extends Payment {
     public static List<FoodBeverage> carts = new ArrayList<>();
 
     public void addCart(FoodBeverage foodBeverage) { 

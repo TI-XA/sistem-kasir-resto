@@ -10,6 +10,7 @@ public class FoodBeverage {
     private BigDecimal price;
 
 
+    //encapsulatoin
     public void setName(String name) {
         this.name = name;
     }
